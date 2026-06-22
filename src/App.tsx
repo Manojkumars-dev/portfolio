@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { SplineHero } from '@/components/ui/demo'
 import { SpecialText } from '@/components/ui/special-text'
+import { PrecisionMetrics } from '@/components/ui/precision-metrics'
 
 // ─── SKILLS DATA ──────────────────────────────────────────
 const SKILLS = [
