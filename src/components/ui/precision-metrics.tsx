@@ -260,7 +260,7 @@ export function PrecisionMetrics() {
             transition: 'color 0.3s',
             textShadow: hoveredCard === 3 ? '0 0 15px rgba(0, 255, 135, 0.3)' : 'none'
           }}>
-            4 MOS<span style={{ fontSize: 14, fontWeight: 600, opacity: 0.7, marginLeft: 4 }}>ACTV</span>
+            4 MOS<span style={{ fontSize: 14, fontWeight: 600, opacity: 0.7, marginLeft: 4 }}>DONE</span>
           </div>
         </div>
 
@@ -328,16 +328,11 @@ export function PrecisionMetrics() {
             <div style={{ ...S, fontSize: 13, color: 'rgba(232, 228, 220, 0.85)', lineHeight: 1.5 }}>
               SYSTEMS DIAGNOSTICS &amp; DEPLOYMENT<br />
               <span style={{ color: hoveredCard === 3 ? 'var(--signal)' : 'rgba(232, 228, 220, 0.7)' }}>
-                TELEMETRY STATUS: ACTIVE <span style={{
+                INTERNSHIP STATUS: COMPLETED <span style={{
                   display: 'inline-block',
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: 'var(--signal)',
+                  fontSize: 12,
                   marginLeft: 6,
-                  animation: 'pulse-soft 1s ease infinite',
-                  boxShadow: '0 0 8px var(--signal)'
-                }} />
+                }}>✓</span>
               </span>
             </div>
           </div>

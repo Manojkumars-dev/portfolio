@@ -138,7 +138,9 @@ export default function App() {
       <Ticker />
 
       {/* PROJECTS */}
-      <section id="work" style={{ background: 'var(--void)', padding: '80px 0' }}>
+      <section id="work" className="bg-projects noise-overlay" style={{ padding: '80px 0' }}>
+        <div className="glow-accent" style={{ top: '-100px', left: '-100px' }} />
+        <div className="glow-accent" style={{ bottom: '-80px', right: '-60px', animationDelay: '-4s' }} />
         <p className="reveal" style={{ ...S, fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(232,228,220,0.5)', padding: '0 48px', marginBottom: 48 }}>
           // SELECTED WORK
         </p>
@@ -174,7 +176,7 @@ export default function App() {
       <Ticker />
 
       {/* SKILLS */}
-      <section id="skills" style={{ background: 'var(--paper)', minHeight: 600, position: 'relative', overflow: 'hidden', padding: '60px 48px 80px' }}>
+      <section id="skills" className="bg-skills noise-overlay" style={{ minHeight: 600, padding: '60px 48px 80px' }}>
 
         <style>{SKILL_ANIMS.map((a, i) => `
           @keyframes pendulum-${i} {
@@ -255,7 +257,8 @@ export default function App() {
 
 
       {/* ABOUT */}
-      <section id="about" style={{ background: 'var(--void)', padding: '100px 48px' }}>
+      <section id="about" className="bg-about noise-overlay" style={{ padding: '100px 48px' }}>
+        <div className="glow-warm" />
         <div style={{ display: 'grid', gridTemplateColumns: '55% 45%', gap: 60, alignItems: 'start' }}>
           <div className="reveal">
             <div style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(36px,4vw,58px)', color: 'var(--paper)', lineHeight: 1.15, marginBottom: 28 }}>
@@ -266,6 +269,33 @@ export default function App() {
               Started with a Diploma in Mechanical Engineering (CGPA 9.39) — which is why I think about systems, not just software.<br /><br />
               Deloitte Data Analytics Job Simulation · NPTEL Big Data Computing.
             </div>
+
+            {/* EXPERIENCE */}
+            <div style={{ marginTop: 40, borderLeft: '3px solid var(--signal)', paddingLeft: 24 }}>
+              <div style={{ ...S, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--signal)', marginBottom: 12 }}>
+                // EXPERIENCE
+              </div>
+              <div style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(22px,3vw,32px)', color: 'var(--paper)', lineHeight: 1.2, marginBottom: 8 }}>
+                Data Science Intern
+              </div>
+              <div style={{ ...S, fontSize: 14, color: 'rgba(232,228,220,0.5)', marginBottom: 16 }}>
+                Take It Smart (OPC) Pvt. Ltd. · Bengaluru, Karnataka · Jan 2026 – May 2026
+              </div>
+              <ul style={{ ...S, fontSize: 14, color: 'rgba(232,228,220,0.6)', lineHeight: 1.9, listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <li style={{ paddingLeft: 16, position: 'relative' }}>
+                  <span style={{ position: 'absolute', left: 0, color: 'var(--signal)' }}>→</span>
+                  Hands-on experience in Data Science through structured learning modules and continuous technical mentorship from industry professionals.
+                </li>
+                <li style={{ paddingLeft: 16, position: 'relative' }}>
+                  <span style={{ position: 'absolute', left: 0, color: 'var(--signal)' }}>→</span>
+                  Applied Python-based data analysis, machine learning concepts, and data visualization techniques on real-world datasets.
+                </li>
+                <li style={{ paddingLeft: 16, position: 'relative' }}>
+                  <span style={{ position: 'absolute', left: 0, color: 'var(--signal)' }}>→</span>
+                  Developed practical expertise in data preprocessing, model building, and deriving actionable insights across a 4-month industry-integrated program.
+                </li>
+              </ul>
+            </div>
           </div>
           <div className="reveal" style={{ borderLeft: '1px solid rgba(232,228,220,0.1)', paddingLeft: 48 }}>
             <PrecisionMetrics />
@@ -274,11 +304,11 @@ export default function App() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="reveal" style={{ background: 'var(--signal)', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px 48px', textAlign: 'center' }}>
-        <div style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(40px,6vw,88px)', color: 'var(--void)', lineHeight: 1, marginBottom: 24 }}>
+      <section id="contact" className="reveal contact-mesh noise-overlay" style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '100px 48px', textAlign: 'center' }}>
+        <div style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(40px,6vw,88px)', color: 'var(--paper)', lineHeight: 1, marginBottom: 28 }}>
           Let's build something.
         </div>
-        <p style={{ ...S, fontSize: 16, color: 'rgba(10,10,10,0.75)', marginBottom: 40, maxWidth: 580, lineHeight: 1.8 }}>
+        <p style={{ ...S, fontSize: 16, color: 'rgba(232,228,220,0.6)', marginBottom: 48, maxWidth: 580, lineHeight: 1.8 }}>
           I'm looking for a Graduate Engineer Trainee role where I can ship from day one.
         </p>
         {[
@@ -286,16 +316,17 @@ export default function App() {
           { href: 'https://www.linkedin.com/in/manojkumars-dev', label: 'linkedin.com/in/manojkumars-dev' },
           { href: 'tel:+918310339811', label: '+91-8310339811' },
         ].map(l => (
-          <a key={l.href} href={l.href} style={{ ...S, display: 'block', fontSize: 18, color: 'var(--void)', margin: '12px 0', letterSpacing: '0.02em' }}
-            onMouseEnter={e => (e.currentTarget.style.textDecoration = 'underline')}
-            onMouseLeave={e => (e.currentTarget.style.textDecoration = 'none')}>
+          <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+            style={{ ...S, display: 'block', fontSize: 18, color: 'var(--signal)', margin: '12px 0', letterSpacing: '0.02em', transition: 'text-shadow 200ms ease' }}
+            onMouseEnter={e => { e.currentTarget.style.textDecoration = 'underline'; e.currentTarget.style.textShadow = '0 0 16px rgba(0,255,135,0.5)' }}
+            onMouseLeave={e => { e.currentTarget.style.textDecoration = 'none'; e.currentTarget.style.textShadow = 'none' }}>
             {l.label}
           </a>
         ))}
       </section>
 
       {/* FOOTER */}
-      <footer style={{ background: 'var(--void)', textAlign: 'center', padding: 32, ...S, fontSize: 13, color: 'rgba(232,228,220,0.4)', letterSpacing: '0.1em' }}>
+      <footer className="bg-footer" style={{ background: 'var(--void)', textAlign: 'center', padding: 32, ...S, fontSize: 13, color: 'rgba(232,228,220,0.4)', letterSpacing: '0.1em' }}>
         Manoj Kumar S · Bengaluru, Karnataka · Built without a template.
       </footer>
     </>
