@@ -1,7 +1,20 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SplineHero } from '@/components/ui/demo'
 import { SpecialText } from '@/components/ui/special-text'
 import { PrecisionMetrics } from '@/components/ui/precision-metrics'
+import { Mail, Phone, Download, Menu, X } from 'lucide-react'
+
+// Brand icons (not available in lucide-react v1.16+)
+const GithubIcon = ({ size = 20 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+  </svg>
+)
+const LinkedinIcon = ({ size = 20 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+  </svg>
+)
 
 // ─── SKILLS DATA ──────────────────────────────────────────
 const SKILLS = [
@@ -66,7 +79,7 @@ const PROJECTS = [
 function Ticker() {
   const content = TICKER_CONTENT.repeat(6)
   return (
-    <div style={{ width: '100%', height: 52, background: 'var(--signal)', overflow: 'hidden', display: 'flex', alignItems: 'center' }} aria-hidden>
+    <div className="ticker-strip" style={{ width: '100%', height: 52, background: 'var(--signal)', overflow: 'hidden', display: 'flex', alignItems: 'center' }} aria-hidden>
       <div style={{ display: 'flex', whiteSpace: 'nowrap', animation: 'ticker 20s linear infinite' }}>
         <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 16, fontWeight: 700, color: 'var(--void)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
           {content}{content}
@@ -82,8 +95,18 @@ export default function App() {
   const lineRef = useRef<HTMLDivElement>(null)
   const blockRef = useRef<HTMLDivElement>(null)
   const dotRef = useRef<HTMLDivElement>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    if (isTouchDevice) {
+      // Hide custom cursor elements and restore default cursor on mobile
+      if (lineRef.current) lineRef.current.style.display = 'none'
+      if (blockRef.current) blockRef.current.style.display = 'none'
+      if (dotRef.current) dotRef.current.style.display = 'none'
+      document.body.style.cursor = 'auto'
+      return
+    }
     const onMove = (e: MouseEvent) => {
       const x = e.clientX, y = e.clientY
       if (lineRef.current) lineRef.current.style.transform = `translate(${x}px,${y}px)`
@@ -119,16 +142,29 @@ export default function App() {
       <div ref={dotRef} id="cursor-dot" />
 
       {/* NAV */}
-      <nav style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: 52, background: 'var(--void)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', zIndex: 100, borderBottom: '1px solid rgba(232,228,220,0.08)' }}>
-        <div style={{ ...S, fontSize: 19, color: 'var(--paper)', letterSpacing: '0.05em' }}>
+      <nav style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: 52, background: 'var(--void)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 clamp(20px, 4vw, 48px)', zIndex: 100, borderBottom: '1px solid rgba(232,228,220,0.08)' }}>
+        <div style={{ ...S, fontSize: 'clamp(14px, 3vw, 19px)', color: 'var(--paper)', letterSpacing: '0.05em' }}>
           <SpecialText speed={18} className="text-[19px] tracking-[0.05em]">MANOJ KUMAR S</SpecialText><span style={{ animation: 'blink 1s step-end infinite', color: 'var(--signal)', fontFamily: "'JetBrains Mono',monospace" }}>_</span>
         </div>
-        <div style={{ display: 'flex', gap: 32 }}>
+        <div className="desktop-nav-links" style={{ display: 'flex', gap: 32 }}>
           {['work', 'skills', 'about', 'contact'].map(l => (
             <a key={l} href={`#${l}`} className="nav-link" style={{ ...S, fontSize: 14, letterSpacing: '0.1em' }}>{l}</a>
           ))}
         </div>
+        <button className="hamburger-btn" onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
+          <Menu size={24} />
+        </button>
       </nav>
+
+      {/* MOBILE MENU OVERLAY */}
+      <div className={`mobile-menu-overlay ${mobileMenuOpen ? 'open' : ''}`}>
+        <button className="mobile-close-btn" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+          <X size={28} />
+        </button>
+        {['work', 'skills', 'about', 'contact'].map(l => (
+          <a key={l} href={`#${l}`} onClick={() => setMobileMenuOpen(false)}>{l}</a>
+        ))}
+      </div>
 
       {/* HERO — SPLINE 3D */}
       <section id="hero" style={{ height: '100vh', paddingTop: 52 }}>
@@ -141,7 +177,7 @@ export default function App() {
       <section id="work" className="bg-projects noise-overlay" style={{ padding: '80px 0' }}>
         <div className="glow-accent" style={{ top: '-100px', left: '-100px' }} />
         <div className="glow-accent" style={{ bottom: '-80px', right: '-60px', animationDelay: '-4s' }} />
-        <p className="reveal" style={{ ...S, fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(232,228,220,0.5)', padding: '0 48px', marginBottom: 48 }}>
+        <p className="reveal section-pad" style={{ ...S, fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(232,228,220,0.5)', padding: '0 clamp(20px, 4vw, 48px)', marginBottom: 48 }}>
           // SELECTED WORK
         </p>
 
@@ -151,23 +187,23 @@ export default function App() {
             borderBottom: '1px solid rgba(232,228,220,0.1)',
             ...(i === 0 ? { borderTop: '1px solid rgba(232,228,220,0.1)' } : {}),
           }}>
-            <div style={{ ...S, fontSize: 120, color: 'var(--signal)', opacity: 0.15, fontWeight: 700, paddingLeft: 48, lineHeight: 1, userSelect: 'none' }}>
+            <div className="project-num" style={{ ...S, fontSize: 120, color: 'var(--signal)', opacity: 0.15, fontWeight: 700, paddingLeft: 48, lineHeight: 1, userSelect: 'none' }}>
               {p.num}
             </div>
-            <div style={{ padding: '0 32px' }}>
-              <div style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(40px,5vw,64px)', color: 'var(--paper)', lineHeight: 1.05, marginBottom: 12 }}>
+            <div className="project-content" style={{ padding: '0 32px' }}>
+              <div className="project-title" style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(40px,5vw,64px)', color: 'var(--paper)', lineHeight: 1.05, marginBottom: 12 }}>
                 {p.title}
               </div>
-              <div style={{ ...S, fontSize: 14, color: 'var(--signal)', letterSpacing: '0.05em' }}>{p.impact}</div>
+              <div className="project-impact" style={{ ...S, fontSize: 14, color: 'var(--signal)', letterSpacing: '0.05em' }}>{p.impact}</div>
               <div className="proj-desc" style={{ ...S, fontSize: 15, color: 'rgba(232,228,220,0.7)', lineHeight: 1.8, marginTop: 12 }}>{p.desc}</div>
             </div>
-            <div style={{ padding: '0 32px 0 0', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center', gap: 8, height: '100%' }}>
+            <div className="project-meta" style={{ padding: '0 32px 0 0', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center', gap: 8, height: '100%' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flex: 1, justifyContent: 'center' }}>
                 {p.stack.map(t => (
                   <span key={t} style={{ ...S, background: 'var(--paper)', color: 'var(--void)', fontSize: 13, borderRadius: 20, padding: '5px 14px', whiteSpace: 'nowrap' }}>{t}</span>
                 ))}
               </div>
-              <div style={{ ...S, fontSize: 14, color: 'var(--signal)', letterSpacing: '0.05em', marginTop: 'auto', paddingBottom: 8, fontWeight: 600 }}>VIEW CODE →</div>
+              <div className="project-view-code" style={{ ...S, fontSize: 14, color: 'var(--signal)', letterSpacing: '0.05em', marginTop: 'auto', paddingBottom: 8, fontWeight: 600 }}>VIEW CODE →</div>
             </div>
           </div>
         ))}
@@ -176,7 +212,7 @@ export default function App() {
       <Ticker />
 
       {/* SKILLS */}
-      <section id="skills" className="bg-skills noise-overlay" style={{ minHeight: 600, padding: '60px 48px 80px' }}>
+      <section id="skills" className="bg-skills noise-overlay" style={{ minHeight: 600, padding: '60px clamp(20px, 4vw, 48px) 80px' }}>
 
         <style>{SKILL_ANIMS.map((a, i) => `
           @keyframes pendulum-${i} {
@@ -193,7 +229,8 @@ export default function App() {
           // THINGS I KNOW
         </div>
 
-        <div className="reveal" style={{ position: 'relative', height: (Math.ceil(SKILLS.length / 5) * 130 + 180) + 'px', margin: '40px 0 0' }}>
+        {/* Desktop: Pendulum animation */}
+        <div className="reveal skills-pendulum" style={{ position: 'relative', height: (Math.ceil(SKILLS.length / 5) * 130 + 180) + 'px', margin: '40px 0 0' }}>
           {SKILLS.map((skill, i) => {
             const a = SKILL_ANIMS[i]
             return (
@@ -248,7 +285,14 @@ export default function App() {
           })}
         </div>
 
-        <div className="reveal" style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 52, color: 'var(--void)', lineHeight: 1.1, marginTop: 24 }}>
+        {/* Mobile: Grid layout */}
+        <div className="reveal skills-mobile-grid">
+          {SKILLS.map(skill => (
+            <span key={skill} className="skill-tag">{skill}</span>
+          ))}
+        </div>
+
+        <div className="reveal skills-quote" style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 52, color: 'var(--void)', lineHeight: 1.1, marginTop: 24 }}>
           "I learn fast.<br />The rest is just syntax."
         </div>
       </section>
@@ -257,9 +301,9 @@ export default function App() {
 
 
       {/* ABOUT */}
-      <section id="about" className="bg-about noise-overlay" style={{ padding: '100px 48px' }}>
+      <section id="about" className="bg-about noise-overlay" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(20px, 4vw, 48px)' }}>
         <div className="glow-warm" />
-        <div style={{ display: 'grid', gridTemplateColumns: '55% 45%', gap: 60, alignItems: 'start' }}>
+        <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '55% 45%', gap: 60, alignItems: 'start' }}>
           <div className="reveal">
             <div style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(36px,4vw,58px)', color: 'var(--paper)', lineHeight: 1.15, marginBottom: 28 }}>
               "From mechanical drawings to machine learning — I changed tracks because I found something more interesting."
@@ -297,37 +341,48 @@ export default function App() {
               </ul>
             </div>
           </div>
-          <div className="reveal" style={{ borderLeft: '1px solid rgba(232,228,220,0.1)', paddingLeft: 48 }}>
+          <div className="reveal about-metrics" style={{ borderLeft: '1px solid rgba(232,228,220,0.1)', paddingLeft: 48 }}>
             <PrecisionMetrics />
           </div>
         </div>
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="reveal contact-mesh noise-overlay" style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '100px 48px', textAlign: 'center' }}>
-        <div style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(40px,6vw,88px)', color: 'var(--paper)', lineHeight: 1, marginBottom: 28 }}>
+      <section id="contact" className="reveal contact-mesh noise-overlay contact-section" style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '100px 48px', textAlign: 'center' }}>
+        <div className="contact-title" style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(40px,6vw,88px)', color: 'var(--paper)', lineHeight: 1, marginBottom: 28 }}>
           Let's build something.
         </div>
-        <p style={{ ...S, fontSize: 16, color: 'rgba(232,228,220,0.6)', marginBottom: 48, maxWidth: 580, lineHeight: 1.8 }}>
+        <p className="contact-desc" style={{ ...S, fontSize: 16, color: 'rgba(232,228,220,0.6)', marginBottom: 48, maxWidth: 580, lineHeight: 1.8 }}>
           I'm looking for a Graduate Engineer Trainee role where I can ship from day one.
         </p>
-        {[
-          { href: 'https://mail.google.com/mail/?view=cm&to=smanojkumar8310@gmail.com&su=Hiring%20Inquiry%20%E2%80%94%20Manoj%20Kumar%20S', label: 'smanojkumar8310@gmail.com' },
-          { href: 'https://www.linkedin.com/in/manojkumars-dev', label: 'linkedin.com/in/manojkumars-dev' },
-          { href: 'tel:+918310339811', label: '+91-8310339811' },
-        ].map(l => (
-          <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
-            style={{ ...S, display: 'block', fontSize: 18, color: 'var(--signal)', margin: '12px 0', letterSpacing: '0.02em', transition: 'text-shadow 200ms ease' }}
-            onMouseEnter={e => { e.currentTarget.style.textDecoration = 'underline'; e.currentTarget.style.textShadow = '0 0 16px rgba(0,255,135,0.5)' }}
-            onMouseLeave={e => { e.currentTarget.style.textDecoration = 'none'; e.currentTarget.style.textShadow = 'none' }}>
-            {l.label}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center', width: '100%', maxWidth: 500 }}>
+          <a href="https://mail.google.com/mail/?view=cm&to=smanojkumar8310@gmail.com&su=Hiring%20Inquiry%20%E2%80%94%20Manoj%20Kumar%20S" target="_blank" rel="noopener noreferrer" className="contact-link-row contact-link">
+            <Mail size={20} /> <span>smanojkumar8310@gmail.com</span>
           </a>
-        ))}
+          <a href="https://www.linkedin.com/in/manojkumars-dev" target="_blank" rel="noopener noreferrer" className="contact-link-row contact-link">
+            <LinkedinIcon size={20} /> <span>linkedin.com/in/manojkumars-dev</span>
+          </a>
+          <a href="https://github.com/manojkumars-dev" target="_blank" rel="noopener noreferrer" className="contact-link-row contact-link">
+            <GithubIcon size={20} /> <span>github.com/manojkumars-dev</span>
+          </a>
+          <a href="tel:+918310339811" className="contact-link-row contact-link">
+            <Phone size={20} /> <span>+91-8310339811</span>
+          </a>
+        </div>
+        <a href="/Manoj_Kumar_S_Resume.pdf" download className="resume-btn" style={{ marginTop: 36 }}>
+          <Download size={18} /> DOWNLOAD RESUME
+        </a>
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-footer" style={{ background: 'var(--void)', textAlign: 'center', padding: 32, ...S, fontSize: 13, color: 'rgba(232,228,220,0.4)', letterSpacing: '0.1em' }}>
+      <footer className="bg-footer" style={{ background: 'var(--void)', textAlign: 'center', padding: '32px clamp(20px, 4vw, 48px)', ...S, fontSize: 13, color: 'rgba(232,228,220,0.4)', letterSpacing: '0.1em' }}>
         Manoj Kumar S · Bengaluru, Karnataka · Built without a template.
+        <div className="social-icons">
+          <a href="https://github.com/manojkumars-dev" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="GitHub"><GithubIcon size={16} /></a>
+          <a href="https://www.linkedin.com/in/manojkumars-dev" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="LinkedIn"><LinkedinIcon size={16} /></a>
+          <a href="https://mail.google.com/mail/?view=cm&to=smanojkumar8310@gmail.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Email"><Mail size={16} /></a>
+          <a href="tel:+918310339811" className="social-icon-link" aria-label="Phone"><Phone size={16} /></a>
+        </div>
       </footer>
     </>
   )

@@ -12,7 +12,7 @@ export function SplineHero() {
 
       <div className="flex h-full">
         {/* Left — text content: three zones pinned top/mid/bottom */}
-        <div style={{ width: '45%', padding: '52px 48px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', zIndex: 10 }}>
+        <div className="hero-text-panel" style={{ width: '45%', padding: '52px 48px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', zIndex: 10 }}>
 
           {/* TOP — spacer */}
           <div />
