@@ -369,7 +369,7 @@ export default function App() {
             <Phone size={20} /> <span>+91-8310339811</span>
           </a>
         </div>
-        <a href="/Manoj_Kumar_S_Resume.pdf" download className="resume-btn" style={{ marginTop: 36 }}>
+        <a href="/ManuJavaResume.pdf" download="Manoj_Kumar_S_Resume.pdf" className="resume-btn" style={{ marginTop: 36 }}>
           <Download size={18} /> DOWNLOAD RESUME
         </a>
       </section>
