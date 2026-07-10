@@ -100,27 +100,45 @@ export default function App() {
   useEffect(() => {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
     if (isTouchDevice) {
-      // Hide custom cursor elements and restore default cursor on mobile
-      if (lineRef.current) lineRef.current.style.display = 'none'
+      if (lineRef.current)  lineRef.current.style.display  = 'none'
       if (blockRef.current) blockRef.current.style.display = 'none'
-      if (dotRef.current) dotRef.current.style.display = 'none'
+      if (dotRef.current)   dotRef.current.style.display   = 'none'
       document.body.style.cursor = 'auto'
       return
     }
+
+    let rafId: number
+    let mouseX = 0, mouseY = 0
+
     const onMove = (e: MouseEvent) => {
-      const x = e.clientX, y = e.clientY
-      if (lineRef.current) lineRef.current.style.transform = `translate(${x}px,${y}px)`
-      if (blockRef.current) blockRef.current.style.transform = `translate(${x}px,${y}px)`
-      if (dotRef.current) dotRef.current.style.transform = `translate(${x - 1.5}px,${y - 1.5}px)`
+      mouseX = e.clientX
+      mouseY = e.clientY
     }
-    window.addEventListener('mousemove', onMove)
+
+    const tick = () => {
+      if (lineRef.current)
+        lineRef.current.style.transform  = `translate3d(${mouseX}px,${mouseY}px,0)`
+      if (blockRef.current)
+        blockRef.current.style.transform = `translate3d(${mouseX}px,${mouseY}px,0)`
+      if (dotRef.current)
+        dotRef.current.style.transform   = `translate3d(${mouseX - 2}px,${mouseY - 2}px,0)`
+      rafId = requestAnimationFrame(tick)
+    }
+
+    window.addEventListener('mousemove', onMove, { passive: true })
+    rafId = requestAnimationFrame(tick)
+
     const enterHover = () => document.body.classList.add('hovering')
     const leaveHover = () => document.body.classList.remove('hovering')
     document.querySelectorAll('a,button,.project-strip').forEach(el => {
       el.addEventListener('mouseenter', enterHover)
       el.addEventListener('mouseleave', leaveHover)
     })
-    return () => window.removeEventListener('mousemove', onMove)
+
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
 
   // Scroll reveal
