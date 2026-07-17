@@ -7,12 +7,12 @@ import { Mail, Phone, Download, Menu, X } from 'lucide-react'
 // Brand icons (not available in lucide-react v1.16+)
 const GithubIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
   </svg>
 )
 const LinkedinIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
   </svg>
 )
 
@@ -60,18 +60,24 @@ const PROJECTS = [
     impact: '// 5 behavioural signals processed simultaneously  ·  YOLOv5 @ 90%+ accuracy  ·  70% less invigilation overhead',
     desc: 'Real-time proctoring platform processing eye gaze, head pose, mouth movement, emotion analysis, and facial recognition simultaneously. Built to catch what humans miss.',
     stack: ['Python', 'Flask', 'YOLOv5', 'CNN · OpenCV', 'SQLite3', 'JavaScript'],
+    github: 'https://github.com/Manojkumars-dev/AI-Proctoring-System',
+    live: null,
   },
   {
     num: '02', title: 'Fullstack Market',
     impact: '// sub-2s load time  ·  real-time Firestore listeners  ·  Stripe checkout  ·  10+ React components',
     desc: 'Production-grade e-commerce with end-to-end purchase flow. Not a tutorial project — a scalable marketplace prototype with real payment infrastructure.',
     stack: ['React.js', 'Firebase', 'Firestore', 'Stripe API', 'Context API', 'Cloud Functions'],
+    github: 'https://github.com/Manojkumars-dev/Amazon-clone',
+    live: null,
   },
   {
     num: '03', title: 'Hostel OS',
     impact: '// 100+ beds managed  ·  60% faster admin workflows  ·  zero double-bookings  ·  full paper-to-digital',
     desc: 'Replaced an entire paper-based system. Dual-panel app for students and admins. The kind of software that actually gets used.',
     stack: ['HTML5 · CSS3', 'JavaScript', 'PHP', 'SQL Server'],
+    github: 'https://github.com/Manojkumars-dev/hostel-management-system',
+    live: 'https://hostel-management-system-r5i5.onrender.com',
   },
 ]
 
@@ -100,9 +106,9 @@ export default function App() {
   useEffect(() => {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
     if (isTouchDevice) {
-      if (lineRef.current)  lineRef.current.style.display  = 'none'
+      if (lineRef.current) lineRef.current.style.display = 'none'
       if (blockRef.current) blockRef.current.style.display = 'none'
-      if (dotRef.current)   dotRef.current.style.display   = 'none'
+      if (dotRef.current) dotRef.current.style.display = 'none'
       document.body.style.cursor = 'auto'
       return
     }
@@ -117,11 +123,11 @@ export default function App() {
 
     const tick = () => {
       if (lineRef.current)
-        lineRef.current.style.transform  = `translate3d(${mouseX}px,${mouseY}px,0)`
+        lineRef.current.style.transform = `translate3d(${mouseX}px,${mouseY}px,0)`
       if (blockRef.current)
         blockRef.current.style.transform = `translate3d(${mouseX}px,${mouseY}px,0)`
       if (dotRef.current)
-        dotRef.current.style.transform   = `translate3d(${mouseX - 2}px,${mouseY - 2}px,0)`
+        dotRef.current.style.transform = `translate3d(${mouseX - 2}px,${mouseY - 2}px,0)`
       rafId = requestAnimationFrame(tick)
     }
 
@@ -221,7 +227,22 @@ export default function App() {
                   <span key={t} style={{ ...S, background: 'var(--paper)', color: 'var(--void)', fontSize: 13, borderRadius: 20, padding: '5px 14px', whiteSpace: 'nowrap' }}>{t}</span>
                 ))}
               </div>
-              <div className="project-view-code" style={{ ...S, fontSize: 14, color: 'var(--signal)', letterSpacing: '0.05em', marginTop: 'auto', paddingBottom: 8, fontWeight: 600 }}>VIEW CODE →</div>
+              <div className="project-view-code" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, marginTop: 'auto', paddingBottom: 8 }}>
+                {p.github && (
+                  <a href={p.github} target="_blank" rel="noopener noreferrer" className="proj-link-btn">
+                    <GithubIcon size={14} /> VIEW CODE
+                  </a>
+                )}
+                {p.live && (
+                  <a href={p.live} target="_blank" rel="noopener noreferrer" className="proj-link-btn proj-link-live">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                    LIVE DEMO
+                  </a>
+                )}
+                {!p.github && !p.live && (
+                  <span style={{ ...S, fontSize: 14, color: 'var(--signal)', letterSpacing: '0.05em', fontWeight: 600 }}>VIEW CODE →</span>
+                )}
+              </div>
             </div>
           </div>
         ))}
