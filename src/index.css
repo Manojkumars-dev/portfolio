@@ -27,7 +27,7 @@ body {
   background: var(--void);
   color: var(--paper);
   font-family: 'JetBrains Mono', monospace;
-  cursor: none;
+  cursor: auto;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,40 +35,7 @@ body {
 }
 a { color: inherit; text-decoration: none; transition: color 200ms ease; }
 
-/* ─── CUSTOM CURSOR ─────────────────────────────────────── */
-#cursor-line {
-  position: fixed; width: 18px; height: 2px;
-  background: var(--signal); pointer-events: none;
-  z-index: 9999;
-  animation: blink 1s step-end infinite;
-  top: 0; left: 0;
-  transform: translate3d(0,0,0);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-#cursor-block {
-  position: fixed; width: 14px; height: 18px;
-  background: var(--signal); pointer-events: none;
-  z-index: 9999;
-  display: none; top: 0; left: 0;
-  transform: translate3d(0,0,0);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-#cursor-dot {
-  position: fixed; width: 4px; height: 4px;
-  background: var(--signal); border-radius: 50%;
-  pointer-events: none; z-index: 9998;
-  top: 0; left: 0;
-  transform: translate3d(-2px,-2px,0);
-  will-change: transform;
-  backface-visibility: hidden;
-  opacity: 0.7;
-}
-body.hovering #cursor-line { display: none; }
-body.hovering #cursor-block { display: block; }
 
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
 /* ─── SPOTLIGHT KEYFRAME ────────────────────────────────── */
 @keyframes spotlight {
@@ -299,42 +266,35 @@ body.hovering #cursor-block { display: block; }
 .bg-skills {
   position: relative;
   overflow: hidden;
-  background:
-    linear-gradient(135deg,
-      #f5f0e8 0%,
-      #ede7db 25%,
-      #faf6ef 50%,
-      #e8e0d0 75%,
-      #f2ece2 100%
-    );
+  background: #0a0a0a;
 }
-/* Prismatic light streaks */
+/* Subtle dark glow streaks */
 .bg-skills::before {
   content: '';
   position: absolute; inset: -50%;
   background:
     conic-gradient(
       from 120deg at 35% 40%,
-      rgba(0,255,135,0.18) 0deg,
-      rgba(0,200,255,0.12) 45deg,
-      rgba(180,100,255,0.1) 90deg,
-      rgba(255,180,50,0.12) 135deg,
-      rgba(255,100,150,0.08) 180deg,
-      rgba(0,255,135,0.15) 225deg,
-      rgba(50,200,255,0.1) 270deg,
-      rgba(246,214,70,0.15) 315deg,
-      rgba(0,255,135,0.18) 360deg
+      rgba(0,255,135,0.06) 0deg,
+      rgba(0,200,255,0.04) 45deg,
+      rgba(180,100,255,0.04) 90deg,
+      rgba(255,180,50,0.04) 135deg,
+      rgba(255,100,150,0.03) 180deg,
+      rgba(0,255,135,0.05) 225deg,
+      rgba(50,200,255,0.04) 270deg,
+      rgba(246,214,70,0.05) 315deg,
+      rgba(0,255,135,0.06) 360deg
     );
   filter: blur(80px);
   animation: prismRotate 20s linear infinite;
   z-index: 0;
 }
-/* Frosted glass overlay with dot pattern */
+/* Subtle dot grid overlay */
 .bg-skills::after {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(circle 2px at center, rgba(10,10,10,0.04) 0%, transparent 1px);
+    radial-gradient(circle 1px at center, rgba(255,255,255,0.04) 0%, transparent 1px);
   background-size: 32px 32px;
   z-index: 0;
   pointer-events: none;

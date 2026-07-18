@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SplineHero } from '@/components/ui/demo'
 import { SpecialText } from '@/components/ui/special-text'
 import { PrecisionMetrics } from '@/components/ui/precision-metrics'
+import { ProjectShowcase } from '@/components/ui/project-showcase'
+import { SolarSystem } from '@/components/ui/solar-system'
 import { Mail, Phone, Download, Menu, X } from 'lucide-react'
 
 // Brand icons (not available in lucide-react v1.16+)
@@ -57,27 +59,43 @@ const TICKER_CONTENT = 'PYTHON · REACT.JS · FLASK · YOLOV5 · FIREBASE · CNN
 const PROJECTS = [
   {
     num: '01', title: 'AI Exam Guardian',
+    designation: 'Python · Flask · YOLOv5 · CNN · OpenCV · SQLite3',
     impact: '// 5 behavioural signals processed simultaneously  ·  YOLOv5 @ 90%+ accuracy  ·  70% less invigilation overhead',
     desc: 'Real-time proctoring platform processing eye gaze, head pose, mouth movement, emotion analysis, and facial recognition simultaneously. Built to catch what humans miss.',
     stack: ['Python', 'Flask', 'YOLOv5', 'CNN · OpenCV', 'SQLite3', 'JavaScript'],
+    image: '/ai-exam-guardian.png',
     github: 'https://github.com/Manojkumars-dev/AI-Proctoring-System',
     live: null,
   },
   {
     num: '02', title: 'Fullstack Market',
+    designation: 'React.js · Firebase · Firestore · Stripe API · Cloud Functions',
     impact: '// sub-2s load time  ·  real-time Firestore listeners  ·  Stripe checkout  ·  10+ React components',
     desc: 'Production-grade e-commerce with end-to-end purchase flow. Not a tutorial project — a scalable marketplace prototype with real payment infrastructure.',
     stack: ['React.js', 'Firebase', 'Firestore', 'Stripe API', 'Context API', 'Cloud Functions'],
+    image: '/amazon-clone.png',
     github: 'https://github.com/Manojkumars-dev/Amazon-clone',
     live: null,
   },
   {
     num: '03', title: 'Hostel OS',
+    designation: 'HTML5 · CSS3 · JavaScript · PHP · SQL Server',
     impact: '// 100+ beds managed  ·  60% faster admin workflows  ·  zero double-bookings  ·  full paper-to-digital',
     desc: 'Replaced an entire paper-based system. Dual-panel app for students and admins. The kind of software that actually gets used.',
     stack: ['HTML5 · CSS3', 'JavaScript', 'PHP', 'SQL Server'],
+    image: '/hostel-os.png',
     github: 'https://github.com/Manojkumars-dev/hostel-management-system',
     live: 'https://hostel-management-system-r5i5.onrender.com',
+  },
+  {
+    num: '04', title: 'Sakkat Oota',
+    designation: 'React.js · Vite · HTML5 · CSS3 · Lucide React',
+    impact: '// 24 authentic Bengaluru dishes  ·  real-time invoice cart  ·  OoruPay checkout  ·  bilingual Kannada UI',
+    desc: 'A premium editorial broadsheet food registry bringing legendary Bengaluru flavors to your screen. Features a newspaper-ink aesthetic, interactive logo switcher, GST-aware invoice cart, and a mock payment gateway.',
+    stack: ['React.js', 'Vite', 'HTML5', 'CSS3', 'Lucide React'],
+    image: '/sakkat-oota.png',
+    github: 'https://github.com/Manojkumars-dev/Food-delivery',
+    live: 'https://food-delivery017.vercel.app',
   },
 ]
 
@@ -97,55 +115,7 @@ function Ticker() {
 
 // ─── APP ──────────────────────────────────────────────────
 export default function App() {
-  // Cursor logic
-  const lineRef = useRef<HTMLDivElement>(null)
-  const blockRef = useRef<HTMLDivElement>(null)
-  const dotRef = useRef<HTMLDivElement>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  useEffect(() => {
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-    if (isTouchDevice) {
-      if (lineRef.current) lineRef.current.style.display = 'none'
-      if (blockRef.current) blockRef.current.style.display = 'none'
-      if (dotRef.current) dotRef.current.style.display = 'none'
-      document.body.style.cursor = 'auto'
-      return
-    }
-
-    let rafId: number
-    let mouseX = 0, mouseY = 0
-
-    const onMove = (e: MouseEvent) => {
-      mouseX = e.clientX
-      mouseY = e.clientY
-    }
-
-    const tick = () => {
-      if (lineRef.current)
-        lineRef.current.style.transform = `translate3d(${mouseX}px,${mouseY}px,0)`
-      if (blockRef.current)
-        blockRef.current.style.transform = `translate3d(${mouseX}px,${mouseY}px,0)`
-      if (dotRef.current)
-        dotRef.current.style.transform = `translate3d(${mouseX - 2}px,${mouseY - 2}px,0)`
-      rafId = requestAnimationFrame(tick)
-    }
-
-    window.addEventListener('mousemove', onMove, { passive: true })
-    rafId = requestAnimationFrame(tick)
-
-    const enterHover = () => document.body.classList.add('hovering')
-    const leaveHover = () => document.body.classList.remove('hovering')
-    document.querySelectorAll('a,button,.project-strip').forEach(el => {
-      el.addEventListener('mouseenter', enterHover)
-      el.addEventListener('mouseleave', leaveHover)
-    })
-
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      cancelAnimationFrame(rafId)
-    }
-  }, [])
 
   // Scroll reveal
   useEffect(() => {
@@ -160,10 +130,6 @@ export default function App() {
 
   return (
     <>
-      {/* CURSORS */}
-      <div ref={lineRef} id="cursor-line" />
-      <div ref={blockRef} id="cursor-block" />
-      <div ref={dotRef} id="cursor-dot" />
 
       {/* NAV */}
       <nav style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: 52, background: 'var(--void)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 clamp(20px, 4vw, 48px)', zIndex: 100, borderBottom: '1px solid rgba(232,228,220,0.08)' }}>
@@ -196,143 +162,29 @@ export default function App() {
       </section>
 
       <Ticker />
-
-      {/* PROJECTS */}
-      <section id="work" className="bg-projects noise-overlay" style={{ padding: '80px 0' }}>
+      <section id="work" className="bg-projects noise-overlay" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(24px, 5vw, 80px)' }}>
         <div className="glow-accent" style={{ top: '-100px', left: '-100px' }} />
         <div className="glow-accent" style={{ bottom: '-80px', right: '-60px', animationDelay: '-4s' }} />
-        <p className="reveal section-pad" style={{ ...S, fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(232,228,220,0.5)', padding: '0 clamp(20px, 4vw, 48px)', marginBottom: 48 }}>
-          // SELECTED WORK
+        <p className="reveal" style={{ ...S, fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(232,228,220,0.5)', marginBottom: 52 }}>
+          // HANDS ON EXPERIENCE
         </p>
-
-        {PROJECTS.map((p, i) => (
-          <div key={i} className="project-strip reveal" style={{
-            display: 'grid', gridTemplateColumns: '20% 60% 20%', alignItems: 'center', minHeight: 290,
-            borderBottom: '1px solid rgba(232,228,220,0.1)',
-            ...(i === 0 ? { borderTop: '1px solid rgba(232,228,220,0.1)' } : {}),
-          }}>
-            <div className="project-num" style={{ ...S, fontSize: 120, color: 'var(--signal)', opacity: 0.15, fontWeight: 700, paddingLeft: 48, lineHeight: 1, userSelect: 'none' }}>
-              {p.num}
-            </div>
-            <div className="project-content" style={{ padding: '0 32px' }}>
-              <div className="project-title" style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(40px,5vw,64px)', color: 'var(--paper)', lineHeight: 1.05, marginBottom: 12 }}>
-                {p.title}
-              </div>
-              <div className="project-impact" style={{ ...S, fontSize: 14, color: 'var(--signal)', letterSpacing: '0.05em' }}>{p.impact}</div>
-              <div className="proj-desc" style={{ ...S, fontSize: 15, color: 'rgba(232,228,220,0.7)', lineHeight: 1.8, marginTop: 12 }}>{p.desc}</div>
-            </div>
-            <div className="project-meta" style={{ padding: '0 32px 0 0', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center', gap: 8, height: '100%' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flex: 1, justifyContent: 'center' }}>
-                {p.stack.map(t => (
-                  <span key={t} style={{ ...S, background: 'var(--paper)', color: 'var(--void)', fontSize: 13, borderRadius: 20, padding: '5px 14px', whiteSpace: 'nowrap' }}>{t}</span>
-                ))}
-              </div>
-              <div className="project-view-code" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, marginTop: 'auto', paddingBottom: 8 }}>
-                {p.github && (
-                  <a href={p.github} target="_blank" rel="noopener noreferrer" className="proj-link-btn">
-                    <GithubIcon size={14} /> VIEW CODE
-                  </a>
-                )}
-                {p.live && (
-                  <a href={p.live} target="_blank" rel="noopener noreferrer" className="proj-link-btn proj-link-live">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-                    LIVE DEMO
-                  </a>
-                )}
-                {!p.github && !p.live && (
-                  <span style={{ ...S, fontSize: 14, color: 'var(--signal)', letterSpacing: '0.05em', fontWeight: 600 }}>VIEW CODE →</span>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
+        <div className="reveal">
+          <ProjectShowcase projects={PROJECTS} />
+        </div>
       </section>
 
       <Ticker />
 
       {/* SKILLS */}
-      <section id="skills" className="bg-skills noise-overlay" style={{ minHeight: 600, padding: '60px clamp(20px, 4vw, 48px) 80px' }}>
-
-        <style>{SKILL_ANIMS.map((a, i) => `
-          @keyframes pendulum-${i} {
-            from { transform: rotate(-${a.swing.toFixed(2)}deg); }
-            to   { transform: rotate(${a.swing.toFixed(2)}deg); }
-          }
-          @keyframes pin-glow-${i} {
-            0%,100% { box-shadow: 0 0 6px 2px rgba(246,214,70,0.55); }
-            50%      { box-shadow: 0 0 14px 5px rgba(246,214,70,0.25); }
-          }
-        `).join('')}</style>
-
-        <div className="reveal" style={{ ...S, fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(10,10,10,0.5)' }}>
+      <section id="skills" className="bg-skills noise-overlay" style={{ minHeight: 600, padding: '60px clamp(20px, 4vw, 48px) 80px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="reveal" style={{ ...S, fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(232,228,220,0.5)', alignSelf: 'flex-start', marginBottom: 40 }}>
           // THINGS I KNOW
         </div>
-
-        {/* Desktop: Pendulum animation */}
-        <div className="reveal skills-pendulum" style={{ position: 'relative', height: (Math.ceil(SKILLS.length / 5) * 130 + 180) + 'px', margin: '40px 0 0' }}>
-          {SKILLS.map((skill, i) => {
-            const a = SKILL_ANIMS[i]
-            return (
-              <div key={skill} style={{ position: 'absolute', left: a.left, top: a.anchorTop, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{
-                  width: 10, height: 10, borderRadius: '50%',
-                  background: 'var(--signal)',
-                  animation: `pin-glow-${i} ${(a.duration * 1.3).toFixed(2)}s ${a.delay.toFixed(2)}s ease-in-out infinite`,
-                  flexShrink: 0, zIndex: 2,
-                }} />
-                <div style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center',
-                  transformOrigin: 'top center',
-                  animation: `pendulum-${i} ${a.duration.toFixed(2)}s ${a.delay.toFixed(2)}s ease-in-out infinite alternate`,
-                  willChange: 'transform',
-                }}>
-                  <div style={{
-                    width: 1, height: a.stringLen,
-                    background: 'linear-gradient(to bottom, rgba(10,10,10,0.55), rgba(10,10,10,0.15))',
-                  }} />
-                  <div
-                    style={{
-                      background: 'var(--void)', color: 'var(--paper)',
-                      ...S, fontSize: 14, borderRadius: 6, padding: '9px 20px',
-                      whiteSpace: 'nowrap', cursor: 'default',
-                      boxShadow: '0 4px 18px rgba(0,0,0,0.18)',
-                      transition: 'background 0.2s, color 0.2s, box-shadow 0.2s',
-                      border: '1px solid rgba(232,228,220,0.08)',
-                    }}
-                    onMouseEnter={e => {
-                      const swing = e.currentTarget.parentElement as HTMLDivElement
-                      swing.style.animationPlayState = 'paused'
-                      const tag = e.currentTarget as HTMLDivElement
-                      tag.style.background = 'var(--signal)'
-                      tag.style.color = 'var(--void)'
-                      tag.style.boxShadow = '0 0 24px 6px rgba(246,214,70,0.5)'
-                    }}
-                    onMouseLeave={e => {
-                      const swing = e.currentTarget.parentElement as HTMLDivElement
-                      swing.style.animationPlayState = 'running'
-                      const tag = e.currentTarget as HTMLDivElement
-                      tag.style.background = 'var(--void)'
-                      tag.style.color = 'var(--paper)'
-                      tag.style.boxShadow = '0 4px 18px rgba(0,0,0,0.18)'
-                    }}
-                  >
-                    {skill}
-                  </div>
-                </div>
-              </div>
-            )
-          })}
+        <div className="reveal" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <SolarSystem />
         </div>
-
-        {/* Mobile: Grid layout */}
-        <div className="reveal skills-mobile-grid">
-          {SKILLS.map(skill => (
-            <span key={skill} className="skill-tag">{skill}</span>
-          ))}
-        </div>
-
-        <div className="reveal skills-quote" style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 52, color: 'var(--void)', lineHeight: 1.1, marginTop: 24 }}>
-          "I learn fast.<br />The rest is just syntax."
+        <div className="reveal skills-quote" style={{ fontFamily: "'DM Serif Display',serif", fontStyle: 'italic', fontSize: 'clamp(28px,4vw,52px)', color: 'var(--paper)', lineHeight: 1.1, marginTop: 48, alignSelf: 'flex-start' }}>
+          "I learn fast.<br /> The rest is just syntax."
         </div>
       </section>
 

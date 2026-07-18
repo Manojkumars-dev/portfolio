@@ -91,7 +91,7 @@ export function PrecisionMetrics() {
             transition: 'color 0.3s',
             textShadow: hoveredCard === 1 ? '0 0 15px rgba(0, 255, 135, 0.3)' : 'none'
           }}>
-            03
+            04
           </div>
         </div>
 
