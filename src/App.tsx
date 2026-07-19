@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { SplineHero } from '@/components/ui/demo'
 import { SpecialText } from '@/components/ui/special-text'
 import { PrecisionMetrics } from '@/components/ui/precision-metrics'
 import { ProjectShowcase } from '@/components/ui/project-showcase'
 import { SolarSystem } from '@/components/ui/solar-system'
+import { SplashScreen } from '@/components/ui/splash-screen'
 import { Mail, Phone, Download, Menu, X } from 'lucide-react'
 
 // Brand icons (not available in lucide-react v1.16+)
@@ -116,6 +117,8 @@ function Ticker() {
 // ─── APP ──────────────────────────────────────────────────
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [showSplash, setShowSplash] = useState(true)
+  const handleSplashDone = useCallback(() => setShowSplash(false), [])
 
   // Scroll reveal
   useEffect(() => {
@@ -130,6 +133,7 @@ export default function App() {
 
   return (
     <>
+      {showSplash && <SplashScreen onDone={handleSplashDone} />}
 
       {/* NAV */}
       <nav style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: 52, background: 'var(--void)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 clamp(20px, 4vw, 48px)', zIndex: 100, borderBottom: '1px solid rgba(232,228,220,0.08)' }}>
